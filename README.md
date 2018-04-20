@@ -1,2 +1,2 @@
 # tv
-Youtube without the clutter, plus Beavis and Butthead
+Youtube without the clutter
