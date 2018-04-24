@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import searchYouTube from './searchYouTube.js';
+import Search from './components/search.jsx';
+import Viewer from './components/viewer.jsx';
+import Results from './components/results.jsx';
+
 import $ from 'jquery';
 const AUTOCOMPLETE_URL = 'https://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q=';
 const API_KEY = 'AIzaSyCRopAgzj_BQRh7k5XJ9ibW-x0jULl6spU';
@@ -12,13 +16,24 @@ class App extends Component {
     super();
 
     this.state = {
+      data: [],
       query: "",
-      results: []
+      results: [],
+      currentData: { 
+        id: 'dQw4w9WgXcQ',
+        snippet: 'Rick Roll'
+      }
     };
 
     this.setData = this.setData.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleTitleClick = this.handleTitleClick.bind(this);
+  }
+
+  handleTitleClick(video) {
+    this.setState({
+      currentData: video
+    });
   }
 
   setData(videos) {
@@ -28,34 +43,21 @@ class App extends Component {
       currentData: videos[0]
     });
   }
-
-  handleInputChange(e){
-    e.preventDefault()
-    this.setState({
-      query: e.target.value
-    });
-  }
  
-  handleSearch (event) {
-    event.preventDefault();
-
-    this.setState({
-      query: this.state.query + event.key
-    }, console.log(this.state.query));
-
-    searchYouTube({key: 'AIzaSyCRopAgzj_BQRh7k5XJ9ibW-x0jULl6spU', query: this.state.query, maxResults: 5});
+  handleSearch (string) {
+    searchYouTube(
+      {key: 'AIzaSyCRopAgzj_BQRh7k5XJ9ibW-x0jULl6spU', query: string, maxResults: 5}, this.setData);
   };
 
   render() {
     return (
       <div className="App">
           <h1 className="App-title">Television</h1>
-
-        <form onSubmit={this.handleSearch}>
-          To get started, edit <code>src/App.js</code> and save to reload.
-          <input className="form-control" type="text" onChange={this.handleInputChange}/>
-        </form>
-
+        <div>
+          <Search searchHandlerFunction={this.handleSearch}/>
+          <Viewer video={this.state.currentData}/>
+          <Results videos={this.state.data} clickHandlerFunction={this.handleTitleClick}/>
+        </div>
       </div>
     );
   }
