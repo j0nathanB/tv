@@ -16,8 +16,7 @@ class Result extends Component {
     return (
       <div>
         <img className="media-object" src={this.props.video.snippet.thumbnails.default.url} alt="" />
-        <div className="video-list-entry-title" onClick={this.handleClick} >{this.props.video.snippet.title}</div>
-        <div className="video-list-entry-detail">{this.props.video.snippet.description}</div>
+        <a onClick={this.handleClick} >{this.props.video.snippet.title}</a>
       </div>
     )
   }

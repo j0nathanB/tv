@@ -19,10 +19,7 @@ class App extends Component {
       data: [],
       query: "",
       results: [],
-      currentData: { 
-        id: 'dQw4w9WgXcQ',
-        snippet: 'Rick Roll'
-      }
+      currentData: {}
     };
 
     this.setData = this.setData.bind(this);
@@ -32,6 +29,7 @@ class App extends Component {
 
   handleTitleClick(video) {
     this.setState({
+      data: [],
       currentData: video
     });
   }
@@ -39,15 +37,14 @@ class App extends Component {
   setData(videos) {
     console.log(videos);
     this.setState({
-      data: videos,
-      currentData: videos[0]
+      data: videos
     });
   }
  
   handleSearch (string) {
     searchYouTube(
       {key: 'AIzaSyCRopAgzj_BQRh7k5XJ9ibW-x0jULl6spU', query: string, maxResults: 5}, this.setData);
-  };
+  }
 
   render() {
     return (

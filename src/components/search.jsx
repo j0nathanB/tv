@@ -1,24 +1,16 @@
 /* jshint esversion: 6 */
 import React, { Component } from 'react';
 
-
 class Search extends Component {
   constructor(props){
     super(props);
 
     this.state = {
       query: ""
-    }
+    };
 
     this.handleSearch = this.handleSearch.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-  }
-
-
-	handleSearch (e) {
-    e.preventDefault();
-
-		this.props.searchHandlerFunction(this.state.query);
   }
   
   handleInputChange(e){
@@ -27,6 +19,12 @@ class Search extends Component {
     this.setState({
       query: e.target.value
     });
+  }
+
+  handleSearch (e) {
+    e.preventDefault();
+
+		this.props.searchHandlerFunction(this.state.query);
   }
 
   render() {
