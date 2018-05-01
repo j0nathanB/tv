@@ -5,11 +5,14 @@ import Result from './result.jsx';
 class Results extends Component { 
 
   render() {
-    return this.props.videos.map( 
-      item => <Result 
-        video={item}
-        clickHandlerFunction={this.props.clickHandlerFunction} 
-      /> 
+    const searchResults = this.props.videos.map( (item, key) => <Result 
+    video={item}
+    clickHandlerFunction={this.props.clickHandlerFunction} />);
+
+    return (
+      <div className="results">
+        {searchResults}
+      </div>
     )
   }
 }

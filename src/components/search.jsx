@@ -31,6 +31,8 @@ class Search extends Component {
     return (
       <form onSubmit={this.handleSearch}>
         <input
+          className="search-bar"
+          placeholder="Search YouTube"
           value={this.state.query} 
           onChange={e => this.handleInputChange(e)
         }/>

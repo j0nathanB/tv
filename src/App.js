@@ -19,7 +19,11 @@ class App extends Component {
       data: [],
       query: "",
       results: [],
-      currentData: {}
+      currentData: {
+        id: {videoId: 'IxtygoMRsR8'},
+        snippet: {description: ''},
+        contentDetails: {duration: '', caption: ''}
+      }
     };
 
     this.setData = this.setData.bind(this);
@@ -35,7 +39,6 @@ class App extends Component {
   }
 
   setData(videos) {
-    console.log(videos);
     this.setState({
       data: videos
     });
@@ -43,15 +46,17 @@ class App extends Component {
  
   handleSearch (string) {
     searchYouTube(
-      {key: 'AIzaSyCRopAgzj_BQRh7k5XJ9ibW-x0jULl6spU', query: string, maxResults: 5}, this.setData);
+      {key: 'AIzaSyCRopAgzj_BQRh7k5XJ9ibW-x0jULl6spU', query: string, maxResults: 25}, this.setData);
   }
 
   render() {
     return (
       <div className="App">
-          <h1 className="App-title">Television</h1>
-        <div>
-          <Search searchHandlerFunction={this.handleSearch}/>
+        <div className="container">
+          <div className ="nav-bar">
+          <h2 className="App-title"> BruTube: Brutalist YouTube </h2>
+          <Search className="search-bar" searchHandlerFunction={this.handleSearch}/>
+          </div>
           <Viewer video={this.state.currentData}/>
           <Results videos={this.state.data} clickHandlerFunction={this.handleTitleClick}/>
         </div>

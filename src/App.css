@@ -2,28 +2,44 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+
+
+.container {
+  display: grid;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.nav-bar {  
 }
 
 .App-title {
+  margin-bottom: 10px;
   font-size: 1.5em;
 }
 
-.App-intro {
-  font-size: large;
+.search-bar {
+  width: 500px;
+  height: 20px;
 }
 
-.container {
-  display: grid
+.viewer {
+  margin: 20px
+}
+
+.results {
+  margin: auto;
+  width: 640px;
+}
+
+.search-result {
+  display: flex;
+  height: 90px;
+  text-align: left;
+  font-size: 1.15em;
+  padding: 5px
+}
+
+.description {
+  margin-left: 25px;
 }
 
 @keyframes App-logo-spin {
