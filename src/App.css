@@ -2,27 +2,26 @@
   text-align: center;
 }
 
-
-
 .container {
-  display: grid;
 }
 
-.nav-bar {  
-}
-
-.App-title {
-  margin-bottom: 10px;
-  font-size: 1.5em;
-}
-
-.search-bar {
-  width: 500px;
-  height: 20px;
+.television {
+  margin-top: 10%;
+  width: 56%;
+  position: relative;
+  z-index: 1;
+  margin-left:auto;
+  margin-right:auto;
+  -webkit-box-reflect: below 0
+    -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(93%, transparent), to(white));
 }
 
 .viewer {
-  margin: 20px
+  left: 29%;
+  top: 28%;
+  border: none;
+  position: absolute;
+  z-index: 0;
 }
 
 .results {

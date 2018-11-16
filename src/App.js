@@ -1,64 +1,97 @@
 /* jshint esversion: 6 */
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import searchYouTube from './searchYouTube.js';
-import Search from './components/search.jsx';
-import Viewer from './components/viewer.jsx';
-import Results from './components/results.jsx';
-
-import $ from 'jquery';
-const AUTOCOMPLETE_URL = 'https://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q=';
-const API_KEY = 'AIzaSyCRopAgzj_BQRh7k5XJ9ibW-x0jULl6spU';
+import Viewer from './components/viewer.js';
+import television from './assets/tv.png'
 
 class App extends Component {
   constructor(){
     super();
+    this.init();
 
-    this.state = {
-      data: [],
-      query: "",
-      results: [],
-      currentData: {
-        id: {videoId: 'IxtygoMRsR8'},
-        snippet: {description: ''},
-        contentDetails: {duration: '', caption: ''}
-      }
+    window['onYouTubeIframeAPIReady'] = (e) => {
+      this.YT = window['YT'];
+      this.player = new window['YT'].Player('player', {
+        events: {
+          'onStateChange': this.onPlayerStateChange.bind(this),
+          //'onError': this.onPlayerError.bind(this),
+          'onReady': (e) => {
+            e.target.playVideo();
+          }
+        },
+        playerVars: 
+          {
+            listType:'playlist',
+            list: 'PLAEQD0ULngi67rwmhrkNjMZKvyCReqDV4'
+          },
+        width: 475
+      });
     };
 
-    this.setData = this.setData.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.handleTitleClick = this.handleTitleClick.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
-  handleTitleClick(video) {
-    this.setState({
-      data: [],
-      currentData: video
-    });
+  componentWillMount() {
+    document.addEventListener("keydown", this.handleInput, false);
   }
 
-  setData(videos) {
-    this.setState({
-      data: videos
-    });
+  handleInput(e) {
+    switch (e.key) {
+      case 'j':
+        console.log('next');
+        this.player.nextVideo();
+        break;
+      case 'f':
+        console.log('previous');
+        this.player.previousVideo();
+        break;
+      case 'g':
+        console.log('play/pause');
+        break;
+      default:
+        console.log('x')
+    }
   }
- 
-  handleSearch (string) {
-    searchYouTube(
-      {key: 'AIzaSyCRopAgzj_BQRh7k5XJ9ibW-x0jULl6spU', query: string, maxResults: 25}, this.setData);
+
+  init() {
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }
+
+  onPlayerStateChange(event) {
+    switch (event.data) {
+      case window['YT'].PlayerState.PLAYING:
+        if (this.cleanTime() === 0) {
+          console.log('started ' + this.cleanTime());
+        } else {
+          console.log('playing ' + this.cleanTime())
+        };
+        break;
+      case window['YT'].PlayerState.PAUSED:
+        if (this.player.getDuration() - this.player.getCurrentTime() !== 0) {
+          console.log(`paused @ ${this.cleanTime()}`);
+        };
+        break;
+      case window['YT'].PlayerState.ENDED:
+        console.log('ended ');
+        break;
+      default: break;
+    };
+  };
+  //utility
+  cleanTime() {
+    return Math.round(this.player.getCurrentTime())
+  };
+
 
   render() {
     return (
       <div className="App">
         <div className="container">
-          <div className ="nav-bar">
-          <h2 className="App-title"> BruTube: Brutalist YouTube </h2>
-          <Search className="search-bar" searchHandlerFunction={this.handleSearch}/>
-          </div>
-          <Viewer video={this.state.currentData}/>
-          <Results videos={this.state.data} clickHandlerFunction={this.handleTitleClick}/>
+          <img className="television" alt="television" src={television} />
+          <Viewer />
         </div>
       </div>
     );
