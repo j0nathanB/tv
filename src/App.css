@@ -2,12 +2,9 @@
   text-align: center;
 }
 
-.container {
-}
-
 .television {
   margin-top: 10%;
-  width: 56%;
+  width: 52%;
   position: relative;
   z-index: 1;
   margin-left:auto;
@@ -18,30 +15,7 @@
 
 .viewer {
   left: 29%;
-  top: 28%;
-  border: none;
+  top: 26%;
   position: absolute;
   z-index: 0;
-}
-
-.results {
-  margin: auto;
-  width: 640px;
-}
-
-.search-result {
-  display: flex;
-  height: 90px;
-  text-align: left;
-  font-size: 1.15em;
-  padding: 5px
-}
-
-.description {
-  margin-left: 25px;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
