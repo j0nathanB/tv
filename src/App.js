@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Viewer from './components/viewer.js';
-import television from './assets/tv.png'
+import Remote from './components/remote.js'
 
 class App extends Component {
   constructor(){
@@ -28,32 +28,50 @@ class App extends Component {
       });
     };
 
+    this.state = {
+      isPlaying: true,
+      isClientMobile: false
+    };
+
     this.handleInput = this.handleInput.bind(this);
   }
 
   componentWillMount() {
+    const isMobile = 
+    navigator.userAgent.indexOf( "Mobile" ) !== -1 || 
+    navigator.userAgent.indexOf( "iPhone" ) !== -1 || 
+    navigator.userAgent.indexOf( "Android" ) !== -1 || 
+    navigator.userAgent.indexOf( "Windows Phone" ) !== -1 ;
+
+  this.setState({
+    isClientMobile: isMobile
+  });
     document.addEventListener("keydown", this.handleInput, false);
   }
 
   handleInput(e) {
+    const {isPlaying} = this.state;
+
     switch (e.key) {
       case 'j':
-        console.log('next');
         this.player.nextVideo();
+        console.log('next');
         break;
       case 'f':
-        console.log('previous');
         this.player.previousVideo();
+        console.log('previous');
         break;
-      case 'g':
+      case ' ':
+        isPlaying ? this.player.pauseVideo() : this.player.playVideo();
         console.log('play/pause');
-        break;
+        break;   
       default:
-        console.log('x')
+        console.log('Press J, F, or Space.');
     }
   }
 
   init() {
+    // inserts script into DOM to have access to YouTube iFrame API
     const tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     const firstScriptTag = document.getElementsByTagName('script')[0];
@@ -63,19 +81,22 @@ class App extends Component {
   onPlayerStateChange(event) {
     switch (event.data) {
       case window['YT'].PlayerState.PLAYING:
-        if (this.cleanTime() === 0) {
-          console.log('started ' + this.cleanTime());
-        } else {
-          console.log('playing ' + this.cleanTime())
-        };
+        const status = this.cleanTime === 0 ? 'started' : 'playing';
+        this.setState({ isPlaying: true });
+        console.log(`${status}: ${this.cleanTime()}`);
+
         break;
       case window['YT'].PlayerState.PAUSED:
+        this.setState({ isPlaying: false });
         if (this.player.getDuration() - this.player.getCurrentTime() !== 0) {
           console.log(`paused @ ${this.cleanTime()}`);
         };
+
         break;
       case window['YT'].PlayerState.ENDED:
+        this.setState({ isPlaying: false });
         console.log('ended ');
+        
         break;
       default: break;
     };
@@ -90,8 +111,10 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          <img className="television" alt="television" src={television} />
-          <Viewer />
+          {this.state.isClientMobile ? 
+            <Remote isPlaying={this.state.isPlaying} handleClick={this.handleInput}/> : 
+            <Viewer />
+            }
         </div>
       </div>
     );
