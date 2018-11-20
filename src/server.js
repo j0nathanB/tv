@@ -10,12 +10,17 @@ app.get('/', function(req, res){
 io.on('connection', function (client) {
   console.log('connected to socket');
 
-  client.on('subscribeToTimer', (interval) => {
-    console.log('client is subscribing to timer with interval ', interval);
-    setInterval(() => {
-      client.emit('timer', new Date());
-    }, interval);
-  });
+  // client.on('subscribeToTimer', (interval) => {
+  //   console.log('client is subscribing to timer with interval ', interval);
+  //   setInterval(() => {
+  //     client.emit('timer', new Date());
+  //   }, interval);
+  // });
+
+  client.on('command', (cmd) => {
+    console.log(`server: ${cmd}`);
+    io.emit('cmd', cmd);
+  })
 
   // client.on('next', handleRegister)
 

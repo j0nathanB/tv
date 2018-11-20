@@ -7,26 +7,25 @@ class Remote extends Component {
     super(props)
     
     this.state = {
-      timestamp: null,
+      command: null,
     }
 
     this.playPause = this.playPause.bind(this);
   }
 
   componentDidMount() {
-    const socket = io('http://localhost:3001');
-
-    const cb = ((err, timestamp) => this.setState({ 
-      timestamp 
-    }, console.log(`time: ${timestamp}`)));
-
-    socket.on('timer', timestamp => cb(null, timestamp));
-    socket.emit('subscribeToTimer', 1000);
+    this.setState({
+      socket: io('http://localhost:3001')
+    })
   }
 
   playPause() {
     this.props.handleClick(' ');
-    console.log('play/pause');
+    this.setState({
+      command: 'play/pause'
+    }, () => this.state.socket.emit('command', this.state.command));
+    
+    console.log('remote: play/pause');
   }
 
 
