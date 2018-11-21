@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Viewer from './components/viewer.js';
 import Remote from './components/remote.js'
+import io from 'socket.io-client';
 
 class App extends Component {
   constructor(){
@@ -30,29 +31,65 @@ class App extends Component {
 
     this.state = {
       isPlaying: true,
-      isClientMobile: false
+      isMobile: false
     };
 
-    this.handleInput = this.handleInput.bind(this);
+    this.handleKeyboardInput = this.handleKeyboardInput.bind(this);
+    this.handleClickerInput = this.handleClickerInput.bind(this);
+    this.inputToCommand = this.inputToCommand.bind(this);
   }
 
   componentWillMount() {
     const isMobile = 
-    navigator.userAgent.indexOf( "Mobile" ) !== -1 || 
-    navigator.userAgent.indexOf( "iPhone" ) !== -1 || 
-    navigator.userAgent.indexOf( "Android" ) !== -1 || 
-    navigator.userAgent.indexOf( "Windows Phone" ) !== -1 ;
+      navigator.userAgent.indexOf( "Mobile" ) !== -1 || 
+      navigator.userAgent.indexOf( "iPhone" ) !== -1 || 
+      navigator.userAgent.indexOf( "Android" ) !== -1 || 
+      navigator.userAgent.indexOf( "Windows Phone" ) !== -1 ;
 
-  this.setState({
-    isClientMobile: isMobile
-  });
+    this.setState({
+      isMobile: isMobile
+    });
+
     document.addEventListener("keydown", this.handleInput, false);
   }
 
-  handleInput(e) {
+  componentDidMount() {
+    const { isMobile } = this.state;
+    const socket = io('http://localhost:3001');
+
+    if (!isMobile) {
+      socket
+      .emit('initTv')
+      .on('handshake', 
+        (roomId) => {
+          socket.emit('joinRoom', roomId);
+        });
+    }
+
+    socket.on('test', (data) => console.log(data));
+    socket.on('command', (cmd) => this.handleClickerInput(cmd))
+  }
+
+  init() {
+    // inserts script into DOM to have access to YouTube iFrame API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
+
+  handleClickerInput(cmd) {
+    this.inputToCommand(cmd);
+  }    
+
+  handleKeyboardInput(e) {
+    this.inputToCommand(e.key);
+  }
+
+  inputToCommand(input) {
     const {isPlaying} = this.state;
 
-    switch (e.key) {
+    switch (input) {
       case 'j':
         this.player.nextVideo();
         console.log('next');
@@ -62,20 +99,13 @@ class App extends Component {
         console.log('previous');
         break;
       case ' ':
+        console.log('space');
         isPlaying ? this.player.pauseVideo() : this.player.playVideo();
         console.log('play/pause');
         break;   
       default:
         console.log('Press J, F, or Space.');
-    }
-  }
-
-  init() {
-    // inserts script into DOM to have access to YouTube iFrame API
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }    
   }
 
   onPlayerStateChange(event) {
@@ -111,8 +141,8 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          {this.state.isClientMobile ? 
-            <Remote isPlaying={this.state.isPlaying} handleClick={this.handleInput}/> : 
+          {this.state.isMobile ? 
+            <Remote isPlaying={this.state.isPlaying} handleInput={this.handleKeyboardInput}/> : 
             <Viewer />
             }
         </div>
