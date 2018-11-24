@@ -19,3 +19,11 @@
   position: absolute;
   z-index: 0;
 }
+
+.button {
+  border: 1px solid gray;
+}
+
+.button :active {
+  background-color: aqua;
+}

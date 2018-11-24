@@ -1,14 +1,19 @@
-/* jshint esversion: 6 */
 import React, { Component } from 'react';
 import './App.css';
 import Viewer from './components/viewer.js';
-import Remote from './components/remote.js'
-import io from 'socket.io-client';
+import Remote from './components/remote.js';
+import Socket from './clients/sockets.js';
 
 class App extends Component {
   constructor(){
     super();
     this.init();
+    
+    this.state = {
+      isPlaying: true,
+      isMobile: false,
+      isMuted: false,
+    };
 
     window['onYouTubeIframeAPIReady'] = (e) => {
       this.YT = window['YT'];
@@ -29,14 +34,9 @@ class App extends Component {
       });
     };
 
-    this.state = {
-      isPlaying: true,
-      isMobile: false
-    };
-
     this.handleKeyboardInput = this.handleKeyboardInput.bind(this);
     this.handleClickerInput = this.handleClickerInput.bind(this);
-    this.inputToCommand = this.inputToCommand.bind(this);
+    this.playerCommands = this.playerCommands.bind(this);
   }
 
   componentWillMount() {
@@ -50,24 +50,23 @@ class App extends Component {
       isMobile: isMobile
     });
 
-    document.addEventListener("keydown", this.handleInput, false);
+    document.addEventListener("keydown", this.handleKeyboardInput, false);
   }
 
   componentDidMount() {
     const { isMobile } = this.state;
-    const socket = io('http://localhost:3001');
 
     if (!isMobile) {
-      socket
+      Socket
       .emit('initTv')
       .on('handshake', 
         (roomId) => {
-          socket.emit('joinRoom', roomId);
+          Socket.emit('joinRoom', roomId);
         });
     }
 
-    socket.on('test', (data) => console.log(data));
-    socket.on('command', (cmd) => this.handleClickerInput(cmd))
+    Socket.on('test', (data) => console.log(data));
+    Socket.on('command', (cmd) => this.handleClickerInput(cmd));
   }
 
   init() {
@@ -79,33 +78,46 @@ class App extends Component {
   }
 
   handleClickerInput(cmd) {
-    this.inputToCommand(cmd);
+    this.playerCommands(cmd);
   }    
 
   handleKeyboardInput(e) {
-    this.inputToCommand(e.key);
+    this.playerCommands(e.key);
   }
 
-  inputToCommand(input) {
-    const {isPlaying} = this.state;
+  playerCommands(input) {
+    const { isPlaying, isMobile } = this.state;
+    const { player } = this;
 
-    switch (input) {
-      case 'j':
-        this.player.nextVideo();
-        console.log('next');
-        break;
-      case 'f':
-        this.player.previousVideo();
-        console.log('previous');
-        break;
-      case ' ':
-        console.log('space');
-        isPlaying ? this.player.pauseVideo() : this.player.playVideo();
-        console.log('play/pause');
-        break;   
-      default:
-        console.log('Press J, F, or Space.');
-    }    
+    // Prevent mobile component from executing input
+    if (!isMobile) {
+      switch (input) {
+        //Next video
+        case 'ArrowRight':
+          player.nextVideo();
+          break;
+  
+        //Previous video
+        case 'ArrowLeft':
+          player.previousVideo();
+          break;
+  
+        //Play/mute
+        case ' ':
+          isPlaying ? player.pauseVideo() : player.playVideo();
+          break; 
+  
+        //Mute
+        case 'f':
+          const { isMuted } = this.state;
+          isMuted ? player.unMute() : player.mute();
+          this.setState({ isMuted: !isMuted });
+          
+          break;
+          default:
+      }    
+    }
+    
   }
 
   onPlayerStateChange(event) {
@@ -136,10 +148,9 @@ class App extends Component {
     return Math.round(this.player.getCurrentTime())
   };
 
-
   render() {
     return (
-      <div className="App">
+      <div className="App" onKeyPress={this.handleKeyboardInput}>
         <div className="container">
           {this.state.isMobile ? 
             <Remote isPlaying={this.state.isPlaying} handleInput={this.handleKeyboardInput}/> : 

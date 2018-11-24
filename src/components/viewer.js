@@ -8,7 +8,6 @@ class Viewer extends Component {
       <div><img className="television" alt="television" src={television} />
       <div className="viewer" id="player"></div></div>
     ) 
-
   }
 }
 
