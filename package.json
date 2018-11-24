@@ -12,9 +12,15 @@
     "socket.io-client": "^2.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "NODE_ENV=development react-scripts start",
+    "dev": "concurrently --kill-others-on-fail \"nodemon src/server.js\" \"npm run start\"",
     "build": "react-scripts build",
+    "deploy": "NODE_ENV=production npm run build && aws s3 cp build/ s3://highlandtv.net --recursive",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.6"
   }
 }
