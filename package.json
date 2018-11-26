@@ -1,8 +1,9 @@
 {
   "name": "tv",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "dotenv": "^6.1.0",
     "jquery": "^3.3.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
@@ -12,10 +13,12 @@
     "socket.io-client": "^2.1.1"
   },
   "scripts": {
-    "start": "NODE_ENV=development react-scripts start",
+    "start": "react-scripts start",
     "dev": "concurrently --kill-others-on-fail \"nodemon src/server.js\" \"npm run start\"",
+
     "build": "react-scripts build",
-    "deploy": "NODE_ENV=production npm run build && aws s3 cp build/ s3://highlandtv.net --recursive",
+    "deploy": "npm run build && aws s3 cp build/ s3://highlandtv.net --recursive",
+
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
