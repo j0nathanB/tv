@@ -13,6 +13,7 @@ class App extends Component {
       isPlaying: true,
       isMobile: false,
       isMuted: false,
+      roomId: 42
     };
 
     window['onYouTubeIframeAPIReady'] = (e) => {
@@ -62,6 +63,7 @@ class App extends Component {
       .on('handshake', 
         (roomId) => {
           Socket.emit('joinRoom', roomId);
+          this.setState({ roomId: roomId });
         });
     }
 
@@ -149,14 +151,16 @@ class App extends Component {
   };
 
   render() {
+    const { isMobile, isPlaying, roomId } = this.state;
+    const deviceClass = isMobile ? "App mobile" : "App desktop"
+
     return (
-      <div className="App" onKeyPress={this.handleKeyboardInput}>
-        <div className="container">
-          {this.state.isMobile ? 
-            <Remote isPlaying={this.state.isPlaying} handleInput={this.handleKeyboardInput}/> : 
-            <Viewer />
+      <div className={deviceClass} onKeyPress={this.handleKeyboardInput}>
+          { isMobile 
+              ? <Remote isPlaying={isPlaying} 
+                  handleInput={this.handleKeyboardInput}/> 
+              : <Viewer roomId={roomId}/>
             }
-        </div>
       </div>
     );
   }

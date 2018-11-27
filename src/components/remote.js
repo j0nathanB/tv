@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Socket from '../clients/sockets.js';
+import RoomForm from './roomForm'
+import './remote.css';
 
 class Remote extends Component {
   constructor(props) {
@@ -16,11 +18,9 @@ class Remote extends Component {
     this.mute = this.mute.bind(this);
   }
 
-  joinRoom() {
-    Socket.emit('joinRoom', 'aQui'); // TODO replace 'aQui' with user input
-    this.setState({
-      room: 'aQui',
-    });
+  joinRoom(code) {
+    Socket.emit('joinRoom', code); // TODO replace 'aQui' with user input
+    this.setState({ room: code });
   }
 
   playPause() {
@@ -57,21 +57,23 @@ class Remote extends Component {
 
   render() {
     const buttonData = [
-      {label: 'join', handler: this.joinRoom}, 
-      {label: 'play / pause', handler: this.playPause},
-      {label: 'next', handler: this.next},
-      {label: 'previous', handler: this.previous},
       {label: 'mute', handler: this.mute},
+      {label: 'play / pause', handler: this.playPause},
+      {label: '< previous', handler: this.previous},
+      {label: 'next >', handler: this.next},
     ]
 
     return (
       <div>
-      {buttonData.map( 
-        (data, ix) => 
-          <div key={ix} className="button" id="remote" onClick={data.handler}>
-            <h1>{data.label}</h1>
+        <RoomForm handleCodeSubmit={this.joinRoom} />
+        <div>
+          {buttonData.map( 
+            (data, ix) => 
+              <div key={ix} className="button" onClick={data.handler}>
+                {data.label}
+              </div>
+            )}
           </div>
-         )}
       </div>
     );
 

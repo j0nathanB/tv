@@ -18,8 +18,8 @@ io.on('connection', (client) => {
   };
 
   client.on('initTv', (err) => {
-    // TODO randomly create room names
-    const randomName = 'aQui';
+    // TODO come up with a better way to get a random name
+    const randomName = client.id.slice(0,4);
     io.emit('handshake', randomName);
   });
 

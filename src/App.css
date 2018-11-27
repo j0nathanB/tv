@@ -2,8 +2,13 @@
   text-align: center;
 }
 
+.room-code {
+  font-family: 'Space Mono', Courier, monospace;
+  margin-top: 5%;
+  margin-bottom: 2%;
+}
+
 .television {
-  margin-top: 10%;
   width: 52%;
   position: relative;
   z-index: 1;
@@ -14,16 +19,9 @@
 }
 
 .viewer {
+  background-color: #d3d3d3;
   left: 29%;
   top: 26%;
   position: absolute;
   z-index: 0;
-}
-
-.button {
-  border: 1px solid gray;
-}
-
-.button :active {
-  background-color: aqua;
 }

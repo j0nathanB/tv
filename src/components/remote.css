@@ -1,0 +1,47 @@
+.form {
+  font-family: 'Courier New', Courier, monospace;
+  display: inline-block;
+  font-size: 12pt;
+  height: 48px;
+  background-color: #ececea;
+  margin-bottom: 0px;
+  padding: 4px 8px 4px 10px;
+  border-left: 1px solid #ececea;
+  border: 1px solid #ff0b3a;
+  margin-right: 0;
+  margin-bottom: 60px;
+  padding-top: 0;
+  padding-bottom: 0;
+  width: calc(100% - 80px);
+}
+
+.form-button {
+  font-family: 'Courier New', Courier, monospace;
+  display: inline-block;
+  font-size: 12pt;
+  height: 50px;
+  background-color: #ff0b3a;
+  margin-left: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  color: #ffffff;
+  border: 0;
+  padding: 4px 10px 5px 10px;
+}
+
+.button {
+  font-family: 'Courier New', Courier, monospace;
+  display: inline-block;
+  font-size: 16pt;
+  height: 50px;
+  background-color: #ececea;
+  border: 1px solid #000;
+  margin-bottom: 32px;
+  margin-right: 16px;
+  padding: 24px 10px 5px 10px; 
+}
+
+.button:active {
+  color: #ff0b3a;
+  border-color: #ff0b3a;
+}
