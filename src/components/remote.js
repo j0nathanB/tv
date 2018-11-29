@@ -27,7 +27,7 @@ class Remote extends Component {
     const {room} = this.state;
     const PLAY_PAUSE = ' ';
 
-    Socket.emit('command', room, PLAY_PAUSE);
+    Socket.emit('sendCommand', room, PLAY_PAUSE);
     console.log('remote: play/pause');
   }
 
@@ -35,7 +35,7 @@ class Remote extends Component {
     const {room} = this.state;
     const NEXT = 'ArrowRight';
 
-    Socket.emit('command', room, NEXT);
+    Socket.emit('sendCommand', room, NEXT);
     console.log('remote: next');
   }
 
@@ -43,7 +43,7 @@ class Remote extends Component {
     const {room} = this.state;
     const PREVIOUS = 'ArrowLeft';
 
-    Socket.emit('command', room, PREVIOUS);
+    Socket.emit('sendCommand', room, PREVIOUS);
     console.log('remote: previous');
   }
 
@@ -51,7 +51,7 @@ class Remote extends Component {
     const {room} = this.state;
     const MUTE = 'f';
 
-    Socket.emit('command', room, MUTE);
+    Socket.emit('sendCommand', room, MUTE);
     console.log('remote: mute');
   }
 

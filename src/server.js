@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
   res.sendFile('../public/index.html', {root: __dirname});
 });
 
-io.on('connection', (client) => {
+io.on('connection', (socket) => {
   console.log('connected to socket');
 
   const printRes = (err) => {
@@ -17,30 +17,29 @@ io.on('connection', (client) => {
     console.log(msg);
   };
 
-  client.on('initTv', (err) => {
+  socket.on('init', (err) => {
     // TODO come up with a better way to get a random name
-    const randomName = client.id.slice(0,4);
-    io.emit('handshake', randomName);
-  });
-
-  client.on('joinRoom', (roomId) => {
-    client.join(roomId, (err) => {
+    const roomId = socket.id.slice(0,4);
+    socket.room = roomId;
+    socket.join(roomId, (err) => {
       printRes(err);
     });
 
+    io.to(roomId).emit('handshake', roomId);
+    // todo: make this a confirmation message in the dom
     io.to(roomId).emit('test', `joined room ${roomId}`);
   });
 
-  client.on('command', (room, cmd) => {
-    io.to(room).emit('command', cmd);
+  socket.on('sendCommand', (room, cmd) => {
+    io.to(room).emit('sendCommand', cmd);
   });
 
-  client.on('disconnect', function() {
-    console.log('client disconnect...', client.id);
+  socket.on('disconnect', function() {
+    console.log('socket disconnect...', socket.id);
   });
 
-  client.on('error', function(err) {
-    console.log('received error from client:', client.id)
+  socket.on('error', function(err) {
+    console.log('received error from socket:', socket.id)
     console.log(err);
   });
 });

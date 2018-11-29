@@ -59,16 +59,15 @@ class App extends Component {
 
     if (!isMobile) {
       Socket
-      .emit('initTv')
+      .emit('init')
       .on('handshake', 
         (roomId) => {
-          Socket.emit('joinRoom', roomId);
           this.setState({ roomId: roomId });
         });
     }
 
     Socket.on('test', (data) => console.log(data));
-    Socket.on('command', (cmd) => this.handleClickerInput(cmd));
+    Socket.on('sendCommand', (cmd) => this.handleClickerInput(cmd));
   }
 
   init() {
