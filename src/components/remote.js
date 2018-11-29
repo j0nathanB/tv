@@ -57,20 +57,20 @@ class Remote extends Component {
 
   render() {
     const buttonData = [
-      {label: 'mute', handler: this.mute},
-      {label: 'play / pause', handler: this.playPause},
-      {label: '< previous', handler: this.previous},
-      {label: 'next >', handler: this.next},
+      {label: 'play_arrow', handler: this.playPause},
+      {label: 'skip_previous', handler: this.previous},
+      {label: 'skip_next', handler: this.next},
+      {label: 'volume_mute', handler: this.mute},
     ]
 
     return (
-      <div>
+      <div className="remote">
         <RoomForm handleCodeSubmit={this.joinRoom} />
-        <div>
+        <div className="controls">
           {buttonData.map( 
             (data, ix) => 
-              <div key={ix} className="button" onClick={data.handler}>
-                {data.label}
+              <div key={ix} className={`button button${ix}`} onClick={data.handler}>
+                <i className="material-icons" style={{fontSize: 48}}>{data.label}</i>
               </div>
             )}
           </div>

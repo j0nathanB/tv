@@ -16,7 +16,7 @@ export default class roomForm extends Component {
   handleSubmit(event) {
     const {handleCodeSubmit} = this.props;
     handleCodeSubmit(this.state.value);
-    console.log('A name was submitted: ' + this.state.value);
+    this.setState({value: ''});
     event.preventDefault();
 
   }
