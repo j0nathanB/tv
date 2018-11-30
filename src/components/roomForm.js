@@ -23,19 +23,18 @@ export default class roomForm extends Component {
 
   render() {
     return (
-        <div>
-      <form onSubmit={this.handleSubmit}>
-          <input 
-            className="form" 
-            type="text" 
-            value={this.state.value} 
-            onChange={this.handleChange} 
-            placeholder="Enter room id here"  
-          />
-        
-        <button className="form-button" type="submit" >Join</button>
-      </form>
-        </div>
+      <div className="room-form">
+        <form onSubmit={this.handleSubmit}>
+            <input 
+              className="form" 
+              type="text" 
+              value={this.state.value} 
+              onChange={this.handleChange} 
+              placeholder="Enter room id here"  
+            />
+          <button className="form-button" type="submit" >Join</button>
+        </form>
+      </div>
     );
   }
 }
