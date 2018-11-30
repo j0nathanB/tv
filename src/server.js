@@ -18,7 +18,6 @@ io.on('connection', (socket) => {
   };
 
   socket.on('init', (err) => {
-    // TODO come up with a better way to get a random name
     const roomId = socket.id.slice(0,4);
     socket.room = roomId;
     socket.join(roomId, (err) => {
@@ -27,7 +26,13 @@ io.on('connection', (socket) => {
 
     io.to(roomId).emit('handshake', roomId);
     // todo: make this a confirmation message in the dom
-    io.to(roomId).emit('test', `joined room ${roomId}`);
+  });
+
+  socket.on('joinRoom', (roomId) => {
+    socket.join(roomId, (err) => {
+      printRes(err);
+    });
+     io.to(roomId).emit('connected', true);
   });
 
   socket.on('sendCommand', (room, cmd) => {

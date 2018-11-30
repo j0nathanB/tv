@@ -9,6 +9,7 @@ class Remote extends Component {
 
     this.state = {
       room: '42',
+      isConnected: false
     };
 
     this.playPause = this.playPause.bind(this);
@@ -18,16 +19,29 @@ class Remote extends Component {
     this.mute = this.mute.bind(this);
   }
 
+  componentDidMount() {
+    const {isPlaying} = this.props;
+
+    Socket.on('connected', () => {
+      this.setState({ 
+        isConnected: true,
+        isPlaying: isPlaying
+      })
+    })
+  }
+
   joinRoom(code) {
-    Socket.emit('joinRoom', code); // TODO replace 'aQui' with user input
+    Socket.emit('joinRoom', code);
     this.setState({ room: code });
   }
 
   playPause() {
-    const {room} = this.state;
+    const { room, isPlaying } = this.state;
     const PLAY_PAUSE = ' ';
 
     Socket.emit('sendCommand', room, PLAY_PAUSE);
+    this.setState({ isPlaying: !isPlaying });
+
     console.log('remote: play/pause');
   }
 
@@ -48,17 +62,19 @@ class Remote extends Component {
   }
 
   mute() {
-    const {room} = this.state;
+    const { room, isMuted } = this.state;
     const MUTE = 'f';
 
     Socket.emit('sendCommand', room, MUTE);
+    this.setState({ isMuted: !isMuted });
+
     console.log('remote: mute');
   }
 
   render() {
-    const {isMuted, isPlaying} = this.props;
-    const playPause = isPlaying ? 'pause' : 'play_arrow';
-    const mute = isMuted ? 'volume_up' : 'volume_off'
+    const { isConnected, isMuted, isPlaying } = this.state;
+    const playPause = isConnected & isPlaying ? 'pause' : 'play_arrow';
+    const mute = isConnected & isMuted ? 'volume_up' : 'volume_off'
 
     const buttonData = [
       {label: playPause, handler: this.playPause},
@@ -69,6 +85,7 @@ class Remote extends Component {
 
     return (
       <div className="remote">
+        <div className="remote-inner">
         <RoomForm handleCodeSubmit={this.joinRoom} />
         <div className="controls">
           {buttonData.map( 
@@ -77,6 +94,7 @@ class Remote extends Component {
                 <i className="material-icons" style={{fontSize: 48}}>{data.label}</i>
               </div>
             )}
+          </div>
           </div>
       </div>
     );

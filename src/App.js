@@ -10,10 +10,11 @@ class App extends Component {
     this.init();
     
     this.state = {
+      isConnected: false,
       isPlaying: true,
       isMobile: false,
       isMuted: false,
-      roomId: 42
+      roomId: 4
     };
 
     window['onYouTubeIframeAPIReady'] = (e) => {
@@ -62,11 +63,20 @@ class App extends Component {
       .emit('init')
       .on('handshake', 
         (roomId) => {
-          this.setState({ roomId: roomId });
+          this.setState({ 
+            roomId: roomId, 
+          });
         });
     }
 
-    Socket.on('test', (data) => console.log(data));
+    const removeCode = () => {
+      setTimeout( () => {
+        this.setState({ roomId: ""});
+      }, 3000)
+    }
+
+    Socket.on('connected', (bool) => 
+      this.setState({ isConnected: bool }, removeCode()));
     Socket.on('sendCommand', (cmd) => this.handleClickerInput(cmd));
   }
 
@@ -87,7 +97,7 @@ class App extends Component {
   }
 
   playerCommands(input) {
-    const { isPlaying, isMobile } = this.state;
+    const { isPlaying, isMobile, isMuted } = this.state;
     const { player } = this;
 
     // Prevent mobile component from executing input
@@ -106,11 +116,11 @@ class App extends Component {
         //Play/mute
         case ' ':
           isPlaying ? player.pauseVideo() : player.playVideo();
+          this.setState({ isPlaying: !isPlaying });
           break; 
   
         //Mute
         case 'f':
-          const { isMuted } = this.state;
           isMuted ? player.unMute() : player.mute();
           this.setState({ isMuted: !isMuted });
           
@@ -150,7 +160,7 @@ class App extends Component {
   };
 
   render() {
-    const { isMobile, isMuted, isPlaying, roomId } = this.state;
+    const { isConnected, isMobile, isMuted, isPlaying, roomId } = this.state;
     const deviceClass = isMobile ? "App mobile" : "App desktop"
 
     return (
@@ -158,7 +168,7 @@ class App extends Component {
           { isMobile 
               ? <Remote isPlaying={isPlaying} isMuted={isMuted}
                   handleInput={this.handleKeyboardInput}/> 
-              : <Viewer roomId={roomId}/>
+              : <Viewer roomId={roomId} isConnected={isConnected}/>
             }
       </div>
     );

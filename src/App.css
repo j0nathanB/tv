@@ -3,9 +3,20 @@
 }
 
 .room-code {
-  font-family: 'Space Mono', Courier, monospace;
-  margin-top: 5%;
-  margin-bottom: 3%;
+  font-family: 'PT Mono', monospace;
+  font-size: 48px;
+  font-weight: bolder; 
+  margin-top: 4%;
+  margin-bottom: 4%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 2.15em;
+  min-height: 1.15em;
+  max-height: 1.15em;
+}
+
+.room-code-active {
+  color: greenyellow;
 }
 
 .viewer {

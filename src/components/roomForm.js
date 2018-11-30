@@ -17,11 +17,11 @@ export default class roomForm extends Component {
 
 
   handleFocus(event) {
-    this.setState({value: " "});
+    this.setState({value: ""});
   }
 
   handleBlur(event) {
-    if (this.state.value ===   " "){
+    if (this.state.value === ""){
       this.setState({value: "ENTER ROOM ID"});
     }
   }
