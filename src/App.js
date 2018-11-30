@@ -108,11 +108,13 @@ class App extends Component {
         //Next video
         case 'ArrowRight':
           player.nextVideo();
+          this.setState({ isPlaying: true });
           break;
   
         //Previous video
         case 'ArrowLeft':
           player.previousVideo();
+          this.setState({ isPlaying: true });
           break;
   
         //Play/mute
