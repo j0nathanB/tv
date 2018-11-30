@@ -31,7 +31,6 @@ export default class roomForm extends Component {
     handleCodeSubmit(this.state.value);
     this.setState({value: ''});
     event.preventDefault();
-
   }
 
   render() {

@@ -6,8 +6,11 @@ class Viewer extends Component {
     return (
       <div>
         <h1 className="room-code">{this.props.roomId}</h1>
-        <img className="television" alt="television" src={television} />
-      <div className="viewer" id="player"></div></div>
+        <div className="viewer">
+          <img className="television" alt="television" src={television} />
+          <div className="iframe" id="player" />
+        </div>
+      </div>
     ) 
   }
 }

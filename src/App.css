@@ -8,8 +8,14 @@
   margin-bottom: 3%;
 }
 
+.viewer {
+  position: relative;
+  height: 0;
+  padding-bottom: 27%;
+}
+
 .television {
-  width: 52%;
+  max-width: 52%;
   position: relative;
   z-index: 1;
   margin-left:auto;
@@ -18,10 +24,12 @@
     -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(93%, transparent), to(white));
 }
 
-.viewer {
-  background-color: #d3d3d3;
-  left: 29%;
-  top: 26%;
+.iframe {
   position: absolute;
+  background-color: #d3d3d3;
+  top: 10%;
+  left: 28%;
+  width: 35%;
+  height: 95%;
   z-index: 0;
 }
