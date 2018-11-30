@@ -9,7 +9,8 @@ class Remote extends Component {
 
     this.state = {
       room: '42',
-      isConnected: false
+      isConnected: false,
+      isPlaying: false
     };
 
     this.playPause = this.playPause.bind(this);

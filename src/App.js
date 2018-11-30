@@ -11,7 +11,7 @@ class App extends Component {
     
     this.state = {
       isConnected: false,
-      isPlaying: true,
+      isPlaying: false,
       isMobile: false,
       isMuted: false,
       roomId: 4
@@ -24,7 +24,8 @@ class App extends Component {
           'onStateChange': this.onPlayerStateChange.bind(this),
           //'onError': this.onPlayerError.bind(this),
           'onReady': (e) => {
-            e.target.playVideo();
+            // e.target.playVideo();
+            // this.setState({isPlaying: true})
           }
         },
         playerVars: 
@@ -49,7 +50,8 @@ class App extends Component {
       navigator.userAgent.indexOf( "Windows Phone" ) !== -1 ;
 
     this.setState({
-      isMobile: isMobile
+      isMobile: isMobile,
+      isPlaying: false
     });
 
     document.addEventListener("keydown", this.handleKeyboardInput, false);
