@@ -15,21 +15,25 @@
   margin: 12% 0 20% 0;
   align-items: flex-start;
   justify-content: center;
+  max-width: 100%;
 }
 
 .form {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Share Tech Mono', monospace;
   font-size: 1.25em;
   height: 2.875em;
   background-color: #ececea;
   padding: 0px 0px 0px 10px;
   border-left: 1px solid #ececea;
   border: 1px solid #ff0b3a;
-  width: 70%
+  min-width: 55%;
+  max-width: 60%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .form-button {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Share Tech Mono', monospace;
   font-size: 1.25em;
   height: 3em;
   background-color: #ff0b3a;
@@ -37,6 +41,8 @@
   padding: 4px 10px 5px 10px;
   margin: 0;
   border: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .button0 {

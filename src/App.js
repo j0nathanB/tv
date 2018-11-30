@@ -150,13 +150,13 @@ class App extends Component {
   };
 
   render() {
-    const { isMobile, isPlaying, roomId } = this.state;
+    const { isMobile, isMuted, isPlaying, roomId } = this.state;
     const deviceClass = isMobile ? "App mobile" : "App desktop"
 
     return (
       <div className={deviceClass} onKeyPress={this.handleKeyboardInput}>
           { isMobile 
-              ? <Remote isPlaying={isPlaying} 
+              ? <Remote isPlaying={isPlaying} isMuted={isMuted}
                   handleInput={this.handleKeyboardInput}/> 
               : <Viewer roomId={roomId}/>
             }

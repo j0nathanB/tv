@@ -56,11 +56,15 @@ class Remote extends Component {
   }
 
   render() {
+    const {isMuted, isPlaying} = this.props;
+    const playPause = isPlaying ? 'pause' : 'play_arrow';
+    const mute = isMuted ? 'volume_up' : 'volume_off'
+
     const buttonData = [
-      {label: 'play_arrow', handler: this.playPause},
+      {label: playPause, handler: this.playPause},
       {label: 'skip_previous', handler: this.previous},
       {label: 'skip_next', handler: this.next},
-      {label: 'volume_mute', handler: this.mute},
+      {label: mute, handler: this.mute},
     ]
 
     return (

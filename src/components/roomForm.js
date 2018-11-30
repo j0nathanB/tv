@@ -7,10 +7,23 @@ export default class roomForm extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   handleChange(event) {
     this.setState({value: event.target.value});
+  }
+
+
+  handleFocus(event) {
+    this.setState({value: " "});
+  }
+
+  handleBlur(event) {
+    if (this.state.value ===   " "){
+      this.setState({value: "ENTER ROOM ID"});
+    }
   }
 
   handleSubmit(event) {
@@ -29,10 +42,12 @@ export default class roomForm extends Component {
               className="form" 
               type="text" 
               value={this.state.value} 
-              onChange={this.handleChange} 
-              placeholder="Enter room id here"  
+              onChange={this.handleChange}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
+              placeholder="ENTER ROOM ID"  
             />
-          <button className="form-button" type="submit" >Join</button>
+          <button className="form-button" type="submit" >JOIN</button>
         </form>
       </div>
     );
