@@ -6,18 +6,20 @@
   position: absolute;
   top: 0px;
   left: 0px;
+  background-color: #fff;
   /* background-color: darkgray; */
-  background-image: url("../assets/brushed-a1.jpg"); 
 }
 
 .remote-inner {
-  width: 98vw;
+  width: 99vw;
   height: 99vh;
   position: absolute;
-  top: -4px;
-  left: -4px;
-  border: 8px solid #888;
+  top: 0.2em;
+  left: 0.12em;
   border-radius: 15px;
+  background-image: url("../assets/brushed-a1.jpg");
+  display: flex;
+  flex-direction: column;
 }
 
 .room-form {
@@ -44,7 +46,7 @@
 }
 
 .form-button {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: 'PT Mono', monospace;
   font-size: 1.25em;
   height: 3em;
   background-color: #ff0b3a;
@@ -54,6 +56,10 @@
   border: 0;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+}
+
+.form-button:active {
+  background-color: maroon;
 }
 
 .button0 {
@@ -105,4 +111,11 @@
 .button:active {
   background-color: rgba(255,11,58, 0.5);
   border: 3px #ff0b3a solid;
+}
+
+.logo {
+  font-family: 'Racing Sans One', cursive;
+  color: rgba(0,0,0,0.6);
+  margin-top: 10%;
+  text-shadow: 0px -1px 0px rgba(255,255,255,.5); /* 50% white from top */
 }

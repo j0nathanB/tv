@@ -86,16 +86,23 @@ class Remote extends Component {
     return (
       <div className="remote">
         <div className="remote-inner">
-        <RoomForm handleCodeSubmit={this.joinRoom} />
-        <div className="controls">
-          {buttonData.map( 
-            (data, ix) => 
-              <div key={ix} className={`button button${ix}`} onClick={data.handler}>
-                <i className="material-icons" style={{fontSize: 48}}>{data.label}</i>
-              </div>
+          <RoomForm handleCodeSubmit={this.joinRoom} />
+
+          <div className="controls">
+            {buttonData.map( 
+              (data, ix) => 
+                <div key={ix} 
+                  className={`button button${ix}`} 
+                  onClick={data.handler}>
+                  
+                  <i className="material-icons" 
+                    style={{fontSize: 48}}>{data.label}</i>
+                </div>
             )}
           </div>
-          </div>
+        
+          <h1 className="logo">Space Command</h1>
+        </div>
       </div>
     );
 
