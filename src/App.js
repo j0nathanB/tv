@@ -25,7 +25,7 @@ class App extends Component {
           //'onError': this.onPlayerError.bind(this),
           'onReady': (e) => {
             // e.target.playVideo();
-            // this.setState({isPlaying: true})
+            // commented because Chrome prevents autoplay
           }
         },
         playerVars: 
