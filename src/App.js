@@ -117,7 +117,7 @@ class App extends Component {
           this.setState({ isPlaying: true });
           break;
   
-        //Play/mute
+        //Play
         case ' ':
           isPlaying ? player.pauseVideo() : player.playVideo();
           this.setState({ isPlaying: !isPlaying });

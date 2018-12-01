@@ -21,12 +21,9 @@ class Remote extends Component {
   }
 
   componentDidMount() {
-    const {isPlaying} = this.props;
-
     Socket.on('connected', () => {
       this.setState({ 
         isConnected: true,
-        isPlaying: isPlaying
       })
     })
   }
@@ -51,6 +48,8 @@ class Remote extends Component {
     const NEXT = 'ArrowRight';
 
     Socket.emit('sendCommand', room, NEXT);
+    this.setState({ isPlaying: true });
+
     console.log('remote: next');
   }
 
@@ -59,6 +58,8 @@ class Remote extends Component {
     const PREVIOUS = 'ArrowLeft';
 
     Socket.emit('sendCommand', room, PREVIOUS);
+    this.setState({ isPlaying: true });
+    
     console.log('remote: previous');
   }
 
