@@ -14,7 +14,7 @@ class App extends Component {
       isPlaying: false,
       isMobile: false,
       isMuted: false,
-      roomId: 4
+      roomId: ''
     };
 
     window['onYouTubeIframeAPIReady'] = (e) => {

@@ -8,7 +8,7 @@ class Remote extends Component {
     super(props);
 
     this.state = {
-      room: '42',
+      room: '',
       isConnected: false,
       isPlaying: false
     };
@@ -59,7 +59,7 @@ class Remote extends Component {
 
     Socket.emit('sendCommand', room, PREVIOUS);
     this.setState({ isPlaying: true });
-    
+
     console.log('remote: previous');
   }
 
