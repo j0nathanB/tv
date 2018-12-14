@@ -10,7 +10,8 @@ class Remote extends Component {
     this.state = {
       room: '',
       isConnected: false,
-      isPlaying: false
+      isPlaying: false,
+      thing: 'meep'
     };
 
     this.playPause = this.playPause.bind(this);
@@ -21,16 +22,17 @@ class Remote extends Component {
   }
 
   componentDidMount() {
-    Socket.on('connected', () => {
-      this.setState({ 
-        isConnected: true,
-      })
+    const {room} = this.state;
+
+    Socket.on('verify', (code) => {
+      console.log('code', code, 'room', room)
+      //this.setState({ isConnected: code === room })
     })
   }
 
   joinRoom(code) {
+    this.setState({ room: code }, console.log(code, this.state.room));
     Socket.emit('joinRoom', code);
-    this.setState({ room: code });
   }
 
   playPause() {
@@ -89,7 +91,9 @@ class Remote extends Component {
       <div className="remote">
         <div className="remote-inner">
           <RoomForm handleCodeSubmit={this.joinRoom} />
-
+          {/* {isConnected 
+            ? <div className="led-green" /> 
+            : <div className="led-red" />}  */}
           <div className="controls">
             {buttonData.map( 
               (data, ix) => 

@@ -4,8 +4,8 @@
 
 .room-code {
   font-family: 'PT Mono', monospace;
-  font-size: 48px;
-  font-weight: bolder; 
+  font-size: 28px;
+  /* font-weight: bolder;  */
   margin-top: 4%;
   margin-bottom: 4%;
   margin-left: auto;
@@ -13,6 +13,9 @@
   max-width: 2.5em;
   min-height: 1.15em;
   max-height: 1.15em;
+  padding: 0.25em;
+  border: 3px solid greenyellow;
+  color: greenyellow;
 }
 
 .room-code-active {
@@ -26,6 +29,7 @@
 }
 
 .television {
+  margin-top: 10%;
   max-width: 52%;
   position: relative;
   z-index: 2;
@@ -36,6 +40,7 @@
 }
 
 .iframe {
+  margin-top: 10%;
   position: absolute;
   background-color: #d3d3d3;
   top: 10%;
@@ -45,11 +50,29 @@
   z-index: 0;
 }
 
-.static{
+.static {
   position: absolute;
   top: 10%;
   left: 28%;
   width: 35%;
   height: 95%;
   z-index: 1
+}
+
+.instructions {
+  margin-top: 10%;
+  position: absolute;
+  top: 10%;
+  left: 28%;
+  width: 35%;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  /* margin-left: auto; */
+  text-align: left;
+  padding: 1em;
+  background-color: blue;
+  color: yellow;
+  z-index: 2;
+  font-family: 'Press Start 2P', monospace; 
 }

@@ -24,7 +24,7 @@
   justify-content: center;
   max-width: 100%;
   margin-top: 2em;
-  margin-bottom: 5em;
+  margin-bottom: 2em;
 }
 
 .form {
@@ -56,6 +56,24 @@
 
 .form-button:active {
   background-color: maroon;
+}
+
+.led-red {
+  margin: auto;
+  width: 18px;
+  height: 18px;
+  background-color: #940;
+  border-radius: 50%;
+  margin-bottom: 2em;
+}
+
+.led-green {
+  margin: auto;
+  width: 18px;
+  height: 18px;
+  background-color: #690;
+  border-radius: 50%;
+  margin-bottom: 2em;
 }
 
 .button0 {

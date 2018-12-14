@@ -61,13 +61,9 @@ class App extends Component {
     const { isMobile } = this.state;
 
     if (!isMobile) {
-      Socket
-      .emit('init')
-      .on('handshake', 
-        (roomId) => {
-          this.setState({ 
-            roomId: roomId, 
-          });
+      Socket.emit('init')
+        .on('handshake', (roomId) => { 
+          this.setState({ roomId: roomId });
         });
     }
 
@@ -77,8 +73,18 @@ class App extends Component {
       }, 3000)
     }
 
+    const verifyRemote = () => {
+      const {roomId} = this.state;
+      Socket.emit('verifyRemote', roomId)
+    }
+
+    const verifyConnection = () => {
+      verifyRemote();
+      removeCode();
+    }
+
     Socket.on('connected', (bool) => 
-      this.setState({ isConnected: bool }, removeCode()));
+      this.setState({ isConnected: bool }, verifyConnection()));
     Socket.on('sendCommand', (cmd) => this.handleClickerInput(cmd));
   }
 

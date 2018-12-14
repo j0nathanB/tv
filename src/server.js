@@ -25,7 +25,6 @@ io.on('connection', (socket) => {
     });
 
     io.to(roomId).emit('handshake', roomId);
-    // todo: make this a confirmation message in the dom
   });
 
   socket.on('joinRoom', (roomId) => {
@@ -34,6 +33,10 @@ io.on('connection', (socket) => {
     });
      io.to(roomId).emit('connected', true);
   });
+
+  socket.on('verifyRemote', (roomId) => {
+    io.to(roomId).emit('verify', roomId);
+  })
 
   socket.on('sendCommand', (room, cmd) => {
     io.to(room).emit('sendCommand', cmd);

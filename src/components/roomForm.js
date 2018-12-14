@@ -3,7 +3,10 @@ import React, { Component } from 'react'
 export default class roomForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {
+      value: '',
+      room: ''
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,11 +20,11 @@ export default class roomForm extends Component {
 
 
   handleFocus(event) {
-    this.setState({value: ""});
+    this.setState({value: ''});
   }
 
   handleBlur(event) {
-    if (this.state.value === ""){
+    if (this.state.value === ''){
       this.setState({value: "ENTER ROOM ID"});
     }
   }
@@ -44,9 +47,9 @@ export default class roomForm extends Component {
               onChange={this.handleChange}
               onFocus={this.handleFocus}
               onBlur={this.handleBlur}
-              placeholder="ENTER ROOM ID"  
+              placeholder="ENTER CODE"
             />
-          <button className="form-button" type="submit" >JOIN</button>
+          <button className="form-button" type="submit" >➔</button>
         </form>
       </div>
     );
