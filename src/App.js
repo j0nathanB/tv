@@ -79,12 +79,12 @@ class App extends Component {
     }
 
     const verifyConnection = () => {
-      verifyRemote();
-      removeCode();
+      //verifyRemote();
+      //removeCode();
     }
 
     Socket.on('connected', (bool) => 
-      this.setState({ isConnected: bool }, verifyConnection()));
+      this.setState({ isConnected: bool }));
     Socket.on('sendCommand', (cmd) => this.handleClickerInput(cmd));
   }
 

@@ -11,7 +11,7 @@ class Viewer extends Component {
     }
 
     this.showStatic = this.showStatic.bind(this)
-    this.timer = setTimeout(this.showStatic, 250)
+    this.timer = setTimeout(this.showStatic, 750)
   }
 
   showStatic() {
@@ -24,11 +24,7 @@ class Viewer extends Component {
 
   render() {
     const { isConnected, isLoading } = this.props;
-    const codeStyle = isConnected ? "room-code room-code-active" : "room-code" 
-    const tvImage = isConnected 
-      ? null
-      : <div className="iframe" id="player"/>
-
+    // const codeStyle = isConnected ? "room-code room-code-active" : "room-code" 
 
     return (
       <div>
@@ -39,11 +35,12 @@ class Viewer extends Component {
           {isConnected ? null : (<div className="instructions">
             <p>Instructions: </p>
             <p>1. Open highlandtv.net on a mobile device. </p>
-            <p>2. Enter this code: <span className={codeStyle}>{this.props.roomId}</span></p>
+            <p>2. Enter this code: <span className="room-code">{this.props.roomId}</span></p>
             <p>3. Enjoy the show!</p>
           </div>)}
 
-          {tvImage}
+          <div className="iframe" id="player"/>
+
         </div>
       </div>
     ) 
