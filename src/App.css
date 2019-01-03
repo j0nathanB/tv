@@ -31,16 +31,20 @@
 .television {
   margin-top: 10%;
   max-width: 52%;
+  height: 29em;
   position: relative;
   z-index: 2;
   margin-left:auto;
   margin-right:auto;
   -webkit-box-reflect: below 0
     -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(93%, transparent), to(white));
+  background-image: url("./assets/tv_small.png");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .iframe {
-  margin-top: 10%;
+  /* margin-top: 10%; */
   position: absolute;
   background-color: #d3d3d3;
   top: 10%;
@@ -60,7 +64,7 @@
 }
 
 .instructions {
-  margin-top: 10%;
+  /* margin-top: 10%; */
   position: absolute;
   top: 10%;
   left: 28%;

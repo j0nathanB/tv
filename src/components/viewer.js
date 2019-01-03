@@ -1,36 +1,14 @@
 import React, { Component } from 'react';
-import television from '../assets/tv_small.png'
-import tvStatic from '../assets/tv_static.gif'
 
 class Viewer extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      isLoading: true
-    }
-
-    this.showStatic = this.showStatic.bind(this)
-    this.timer = setTimeout(this.showStatic, 750)
-  }
-
-  showStatic() {
-    this.setState({ isLoading: false });
-  }
-
-  componentWillUnmount(){
-    clearTimeout(this.timer);
-  }
-
   render() {
-    const { isConnected, isLoading } = this.props;
-    // const codeStyle = isConnected ? "room-code room-code-active" : "room-code" 
+    const { isConnected } = this.props;
 
     return (
       <div>
-        {this.state.isLoading ? <img className="tvStatic" src={tvStatic} /> : null}
         <div className="viewer">
-          <img className="television" alt="television" src={television} />
+        
+          <div className="television" />
 
           {isConnected ? null : (<div className="instructions">
             <p>Instructions: </p>
@@ -40,7 +18,7 @@ class Viewer extends Component {
           </div>)}
 
           <div className="iframe" id="player"/>
-
+          
         </div>
       </div>
     ) 
